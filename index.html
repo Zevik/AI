@@ -26,6 +26,7 @@
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
 
         @keyframes typing {
@@ -55,6 +56,8 @@
             overflow: hidden;
             white-space: nowrap;
             animation: typing 3.5s steps(40, end);
+            display: block; /* Changed to block to take full width for centering */
+            text-align: center; /* Added text-align: center to the typing-effect itself */
         }
 
         .card {
@@ -131,13 +134,16 @@
     <div class="container mx-auto px-4 py-12">
         <div class="max-w-4xl mx-auto text-center">
             <div class="card rounded-xl p-8 mb-12 shadow-2xl">
-                <h1 class="text-5xl font-bold mb-8 typing-effect" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
-                    סדנה חינמית<br>
-                    להכרת הבינה המלאכותית
+                <h1 class="text-3xl sm:text-4xl font-bold mb-8 text-center" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                    <span class="typing-effect">
+                        סדנה חינמית<br>
+                        להכרת<br>
+                        הבינה המלאכותית
+                    </span>
                 </h1>
 
-                <p class="text-3xl font-bold mb-6" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
-                    זה בחינם! וזה משנה חיים! מאות מיליונים כבר בפנים.
+                <p class="text-2xl font-bold mb-6" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+                    <b>זה בחינם! וזה משנה חיים! מאות מיליונים כבר בפנים.</b>
                 </p>
             </div>
 
