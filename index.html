@@ -12,80 +12,165 @@
             100% { transform: translateY(0px); }
         }
 
-        @keyframes glow {
-            0% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6; }
-            100% { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #0073e6, 0 0 40px #0073e6; }
-        }
-
-        @keyframes gradientBG {
+        @keyframes slideBg {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
+        @keyframes ripple {
+            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3); }
+            100% { box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
         .gradient-bg {
-            background: linear-gradient(-45deg, #3490dc, #6574cd, #9561e2, #f66d9b);
+            background: linear-gradient(-45deg, #1a365d, #2b6cb0, #4299e1, #63b3ed);
             background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            animation: slideBg 15s ease infinite;
+        }
+
+        .ripple {
+            animation: ripple 1.5s infinite;
         }
 
         .float-animation {
             animation: float 6s ease-in-out infinite;
         }
 
-        .glow-text {
-            animation: glow 2s ease-in-out infinite alternate;
+        .bounce {
+            animation: bounce 2s infinite;
         }
 
-        .btn-hover {
-            transition: all 0.3s ease;
-            background-size: 200% auto;
-            background-image: linear-gradient(to right, #4CAF50 0%, #45a049 51%, #4CAF50 100%);
+        .typing-effect {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end);
         }
 
-        .btn-hover:hover {
-            background-position: right center;
-            transform: scale(1.05);
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        .btn-special {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
-        .pulse {
-            animation: pulse 2s infinite;
+        .btn-special:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-special:hover:before {
+            left: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 6s infinite;
+        }
+
+        .rotating-border {
+            position: relative;
+        }
+
+        .rotating-border:before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 3px solid transparent;
+            border-radius: inherit;
+            background: linear-gradient(45deg, #4CAF50, #45a049, #4CAF50) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body class="gradient-bg min-h-screen text-white font-sans">
+    <!-- Floating Particles -->
+    <div id="particles"></div>
+
     <div class="container mx-auto px-4 py-12">
         <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-5xl font-bold mb-8 glow-text">
-                סדנה חינמית להכרת הבינה המלאכותית
-            </h1>
-            
-            <div class="float-animation bg-white bg-opacity-10 rounded-xl p-8 backdrop-blur-lg shadow-2xl mb-12">
-                <p class="text-2xl mb-6">
-                    איך להפוך אותה לאחד הכלים השימושיים ביותר בחיים שלנו. יהיה כיף, מצחיק ומעניין מאוד!
-                </p>
-                <p class="text-3xl font-bold mb-6 glow-text">
+            <div class="card rounded-xl p-8 mb-12 shadow-2xl">
+                <h1 class="text-5xl font-bold mb-8 typing-effect" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                    סדנה חינמית<br>
+                    להכרת הבינה המלאכותית
+                </h1>
+
+                <p class="text-3xl font-bold mb-6" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
                     זה בחינם! וזה משנה חיים! מאות מיליונים כבר בפנים.
                 </p>
             </div>
 
-            <div class="mb-12 bg-black bg-opacity-30 p-8 rounded-xl">
-                <h2 class="text-2xl font-bold mb-4">מה נלמד?</h2>
-                <ul class="text-xl space-y-4">
-                    <li class="pulse">✨ נוריד יחד את האפליקציות החינמיות</li>
-                    <li class="pulse">🎯 נתרגל שימושים שיעזרו לכם מהרגע הראשון</li>
-                    <li class="pulse">🚀 נגלה איך אפשר להפוך מחשבות למציאות</li>
+            <div class="float-animation card rounded-xl p-8 mb-12">
+                <p class="text-2xl">
+                    איך להפוך אותה לאחד הכלים השימושיים ביותר בחיים שלנו. יהיה כיף, מצחיק ומעניין מאוד!
+                </p>
+            </div>
+
+            <div class="mb-12 bg-black bg-opacity-30 p-8 rounded-xl card">
+                <h2 class="text-2xl font-bold mb-8">מה נלמד?</h2>
+                <ul class="text-xl space-y-6">
+                    <li class="bounce flex items-center justify-center">
+                        <span class="ripple inline-block p-4 rounded-full bg-blue-500 mr-4">✨</span>
+                        נוריד יחד את האפליקציות החינמיות
+                    </li>
+                    <li class="bounce flex items-center justify-center">
+                        <span class="ripple inline-block p-4 rounded-full bg-green-500 mr-4">🎯</span>
+                        נתרגל שימושים שיעזרו לכם מהרגע הראשון
+                    </li>
+                    <li class="bounce flex items-center justify-center">
+                        <span class="ripple inline-block p-4 rounded-full bg-purple-500 mr-4">🚀</span>
+                        נגלה איך אפשר להפוך מחשבות למציאות
+                    </li>
                 </ul>
             </div>
 
-            <div class="bg-white bg-opacity-10 rounded-xl p-8 backdrop-blur-lg mb-12">
+            <a href="https://us06web.zoom.us/webinar/register/WN_Ckihqc0vTLyGqyLf4EZAQw"
+               class="btn-special inline-block text-2xl font-bold text-white px-12 py-6 rounded-full shadow-lg text-center ripple mb-12">
+                להרשמה לסדנה החינמית
+            </a>
+
+            <div class="card rounded-xl p-8 mb-12">
                 <p class="text-xl mb-4">
                     שעה וחצי סדנה בזום להכרת הבינה המלאכותית
                 </p>
@@ -93,16 +178,35 @@
                     עדיף להתחבר ממחשב אבל גם סלולרי יספיק
                 </p>
             </div>
-
-            <a href="https://us06web.zoom.us/webinar/register/WN_Ckihqc0vTLyGqyLf4EZAQw" 
-               class="btn-hover inline-block text-2xl font-bold text-white px-12 py-6 rounded-full shadow-lg text-center">
-                להרשמה לסדנה החינמית
-            </a>
         </div>
     </div>
 
     <div class="fixed bottom-0 left-0 w-full bg-black bg-opacity-50 text-center py-4">
-        <p class="text-sm">מספר המקומות מוגבל - הרשמה מראש חובה</p>
+        <p class="text-sm mb-2">מספר המקומות מוגבל - הרשמה מראש חובה</p>
+        <p class="text-xl font-bold">זאביק אבינר</p>
     </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const colors = ['#4CAF50', '#45a049', '#357a38'];
+
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 10 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize particles on load
+        window.addEventListener('load', createParticles);
+    </script>
 </body>
 </html>
